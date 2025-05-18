@@ -525,6 +525,17 @@ footer {
   background: linear-gradient(#38383d, #1d1d20 16%);
   font-size: 9pt;
 }
+#footer_icons {
+	height: 18px;
+	float: right;
+	display: flex;
+	gap: 5px;
+}
+
+#rss_icon {
+    width: 16px;
+    height: 16px;
+}
 
 #info, #chat {
   display: none;

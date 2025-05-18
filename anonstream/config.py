@@ -40,6 +40,7 @@ def toml_to_flask_sections(config):
         toml_to_flask_section_captcha,
         toml_to_flask_section_nojs,
         toml_to_flask_section_emote,
+        toml_to_flask_section_rss,
     )
     for toml_to_flask_section in TOML_TO_FLASK_SECTIONS:
         yield toml_to_flask_section(config)
@@ -167,7 +168,14 @@ def toml_to_flask_section_nojs(config):
     }
 
 def toml_to_flask_section_emote(config):
-  cfg = config['emote']
-  return {
-    'EMOTE_SCHEMA': cfg['schema'],
-  }
+    cfg = config['emote']
+    return {
+        'EMOTE_SCHEMA': cfg['schema'],
+    }
+
+def toml_to_flask_section_rss(config):
+    cfg = config['rss']
+    return {
+        'RSS_URL': cfg['url'],
+        'RSS_OFFLINE_GRACE_PERIOD': cfg['offline_grace_period'],
+    }

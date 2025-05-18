@@ -2,8 +2,9 @@ aiofiles==0.8.0
 asgiref==3.5.0
 blinker==1.4
 Brotli==1.0.9
-git+https://github.com/lepture/captcha@27920681b86c27c990da484984f673dba1dd47e5#egg=captcha
+captcha==0.7.1
 click==8.0.4
+feedgen==1.0.0
 h11==0.13.0
 h2==4.1.0
 hpack==4.0.0
@@ -14,7 +15,7 @@ itsdangerous==2.1.0
 Jinja2==3.0.3
 m3u8==1.0.0
 MarkupSafe==2.1.0
-Pillow==9.0.1
+pillow==9.5.0
 priority==2.0.0
 quart==0.16.3
 quart-compress==0.2.1

@@ -151,3 +151,8 @@ async def static(timestamp, user, filename):
     if filename in {'style.css', 'anonstream.js'}:
         response.headers['Cache-Control'] = 'no-cache'
     return response
+
+@current_app.route('/rss.xml')
+async def rss():
+    response = await send_from_directory(current_app.root_path, 'rss.xml')
+    return response

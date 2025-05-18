@@ -3,6 +3,7 @@
 
 import asyncio
 import itertools
+import time
 from functools import wraps
 
 from quart import current_app, websocket
@@ -11,6 +12,7 @@ from anonstream.broadcast import broadcast, broadcast_users_update
 from anonstream.stream import is_online, get_stream_title, get_stream_uptime_and_viewership
 from anonstream.user import get_absent_users, get_sunsettable_users, deverify, ensure_allowedness, AllowednessException
 from anonstream.wrappers import with_timestamp
+from anonstream.notify import update_feed
 
 CONFIG = current_app.config
 MESSAGES = current_app.messages
@@ -156,6 +158,7 @@ async def t_broadcast_stream_info_update(timestamp, iteration):
         current_app.stream_title = title
         current_app.stream_uptime = uptime
         current_app.stream_viewership = viewership
+        current_app.current_time = 0
     else:
         info = {}
         title = await get_stream_title()
@@ -181,6 +184,12 @@ async def t_broadcast_stream_info_update(timestamp, iteration):
             stats_changed = True
         else:
             stats_changed = abs(uptime - projected_uptime) >= 0.5
+
+		# RSS Feed
+        if is_online() is True:
+            if current_app.current_time + CONFIG['RSS_OFFLINE_GRACE_PERIOD'] < time.time():
+                update_feed(current_app.stream_title, CONFIG['DEFAULT_HOST_NAME'], CONFIG['RSS_URL'])
+            current_app.current_time = time.time()
 
         # Check if viewership has changed
         if current_app.stream_viewership != viewership:
